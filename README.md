@@ -10,10 +10,10 @@ To allow dynamic visualization, data is interpolated on a regular grid. Grid ste
     python>=3.7
     
     pyqt5>=5.13
-    numpy>=1.16
+    numpy>=1.15
 	scipy>=1.3
     h5py>=2.9
-    matplotlib>=3
+    matplotlib>=3.1
 
 ## Installation
 In your python 3.7 environment:
