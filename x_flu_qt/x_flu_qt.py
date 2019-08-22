@@ -277,7 +277,7 @@ class GUI(QDialog):
             self.xs[0] = xs[0]
             for i in range(1, len(self.xs)):
                 self.xs[i] = xs[i] + shift * (xs[i] - xs[i - 1])
-                
+            
             self.xmin = min(xs)
             self.xmax = max(xs)
             self.ymin = min(self.ys)
@@ -294,7 +294,7 @@ class GUI(QDialog):
             self.e_to.setText(str(self.erange_slider.high()))
             self.e_lines.setPlainText('Lines in energy region\n\n\n')
             
-            self.interpolate()
+            self.interpolate(True)
 
             self.erange_grp.setEnabled(True)
             self.opt_apply.setEnabled(True)
@@ -305,7 +305,7 @@ class GUI(QDialog):
             self.plot_grp.setEnabled(False) 
             self.opt_apply.setEnabled(False)
 
-    def interpolate(self):
+    def interpolate(self, reset_axlimits=False):
         self.grid_step = float(self.grid_step_entry.text())
         self.interp_method = self.int_type.currentText()
         self.cmap = self.cmap_choose.currentText()
@@ -314,12 +314,15 @@ class GUI(QDialog):
         self.xi,self.yi = np.meshgrid(self.xi,self.yi)                    
         self.zi = griddata((self.xs,self.ys),self.signal,(self.xi,self.yi),method=self.interp_method) 
         self.plot_grp.setEnabled(True)  
-        self.update_plot()    
+        self.update_plot(reset_axlimits)    
         
-    def update_plot(self): 
+    def update_plot(self, reset_axlimits=False): 
         idx0 = int(self.erange_slider.low()/10)
         idx1 = int(self.erange_slider.high()/10)
         self.im = self.ax.imshow(self.zi[:,:,idx0:idx1].sum(axis=2), interpolation=self.smooth, cmap=self.cmap, extent=[self.xmin, self.xmax, self.ymin, self.ymax], aspect='auto', origin='lower')
+        if(reset_axlimits):
+            self.ax.set_xlim(self.xmin, self.xmax)
+            self.ax.set_ylim(self.ymin, self.ymax)
         self.cb.remove()
         self.cb = self.fig.colorbar(self.im, ax=self.ax, use_gridspec=True)
         self.fig.canvas.draw_idle()
@@ -334,8 +337,13 @@ class GUI(QDialog):
         self.e_to.setText(str(self.erange_slider.high()))
         self.e_lines.setPlainText('Lines in energy region\n\n\n')
         
+        self.xmin = self.ymin = 0
+        self.xmax = self.ymax = 1
+        
         self.zi = np.zeros([3,3])
         self.im = self.ax.imshow(self.zi, cmap=self.cmap, extent=[self.xmin, self.xmax, self.ymin, self.ymax], aspect='auto')
+        self.ax.set_xlim(self.xmin, self.xmax)
+        self.ax.set_ylim(self.ymin, self.ymax)
         self.cb.remove()
         self.cb = self.fig.colorbar(self.im, ax=self.ax, use_gridspec=True)
         self.fig.canvas.draw_idle()
