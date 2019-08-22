@@ -56,3 +56,16 @@ the resulting image will be smoother or coarser.
 
 A coarse/smooth slider below the image can be used to select `imshow` 
 interpolation method.
+
+## Resolving known issues
+
+On some linux systems application launch may raise an error:
+`ModuleNotFoundError: No module named 'PyQt5.sip'`
+
+the solution is to install pyqt5-sip before pyqt5:
+
+    $ pip uninstall pyqt5
+    $ pip uninstall pyqt5-sip
+    $ pip install pyqt5-sip
+    $ pip install pyqt5
+
