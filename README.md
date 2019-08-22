@@ -31,6 +31,9 @@ In your python 3.7 environment:
 
     $ x_flu
 
+## Appearance
+![Application appearance](https://github.com/ldorofeeva/x_flu_qt/blob/master/img/app.png)
+
 ## Usage
 * Select an x-ray fluorescence map file;
 * Select entry;
