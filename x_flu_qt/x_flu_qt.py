@@ -194,7 +194,7 @@ class GUI(QDialog):
         self.cmap_choose.setCurrentIndex(0)
         
         self.opt_apply = QPushButton("Apply")
-        self.opt_apply.clicked.connect(self.interpolate)
+        self.opt_apply.clicked.connect(self.apply_advanced_opts)
         self.opt_apply.setEnabled(False)
         
         layout = QGridLayout()
@@ -315,7 +315,7 @@ class GUI(QDialog):
         self.zi = griddata((self.xs,self.ys),self.signal,(self.xi,self.yi),method=self.interp_method) 
         self.plot_grp.setEnabled(True)  
         self.update_plot(reset_axlimits)    
-        
+
     def update_plot(self, reset_axlimits=False): 
         idx0 = int(self.erange_slider.low()/10)
         idx1 = int(self.erange_slider.high()/10)
@@ -326,6 +326,14 @@ class GUI(QDialog):
         self.cb.remove()
         self.cb = self.fig.colorbar(self.im, ax=self.ax, use_gridspec=True)
         self.fig.canvas.draw_idle()
+    
+    def apply_advanced_opts(self):
+        # do not reinterpolate if only cmap has changed
+        if (self.grid_step == float(self.grid_step_entry.text())) and (self.interp_method == self.int_type.currentText()):
+            self.cmap = self.cmap_choose.currentText()
+            self.update_plot()
+        else:
+            self.interpolate()
         
     def clear_view(self):
         self.erange_slider.setMinimum(0)
