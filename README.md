@@ -41,14 +41,14 @@ in the region of and prints out corresponding periodic table elements.
 
 *Periodic Table and X-ray energies data are taken from BRUKER.*
 
-** Advanced options **
+**Advanced options**
 
 * `Grid step` - size of the interpolation grid cell in millimiters;
 * `Interpolation` - interpolation method (either nearest neighbour or linear);
 * `Colormap` - allows to select one of four popular color maps.
 
 
-** Smoothing the image **
+**Smoothing the image**
 
 The visualization is performed via matplotlib `imshow` that displays an image, 
 i.e. data on a 2D regular raster. Depending on interpolation method being used, 
