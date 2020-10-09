@@ -10,7 +10,7 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
-from rangeslider import RangeSlider
+from x_flu_qt.rangeslider import RangeSlider
 import h5py
 import numpy as np
 
